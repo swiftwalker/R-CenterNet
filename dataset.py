@@ -103,17 +103,17 @@ class ctDataset(data.Dataset):
             bbox[[0, 2]] = np.clip(bbox[[0, 2]], 0, output_w - 1)  
             bbox[[1, 3]] = np.clip(bbox[[1, 3]], 0, output_h - 1)
             # 上面几行都是做数据扩充和resize之后的变换，不重要
-            h, w = bbox[3] - bbox[1], bbox[2] - bbox[0]
+            h, w = bbox[3] - bbox[1], bbox[2] - bbox[0] # 降采样后的box的宽和高
             if h > 0 and w > 0:
                 radius = gaussian_radius((math.ceil(h), math.ceil(w)))  
-                radius = max(0, int(radius))
-                ct = np.array([(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2], dtype=np.float32) 
+                radius = max(0, int(radius))  # 找到gauss核的半径
+                ct = np.array([(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2], dtype=np.float32) # ct:中心点
                 ct_int = ct.astype(np.int32) 
-                draw_gaussian(hm[cls_id], ct_int, radius)
+                draw_gaussian(hm[cls_id], ct_int, radius) 
                 wh[k] = 1. * w, 1. * h
                 ang[k] = 1. * an
-                ind[k] = ct_int[1] * output_w + ct_int[0]  
-                reg[k] = ct - ct_int
+                ind[k] = ct_int[1] * output_w + ct_int[0]  # 一维索引
+                reg[k] = ct - ct_int  # 中心点偏移
                 reg_mask[k] = 1
         ret = {'input': inp, 'hm': hm, 'reg_mask': reg_mask, 'ind': ind, 'wh': wh, 'ang':ang}
         reg_offset_flag = True #

@@ -11,8 +11,8 @@ import time
 import torch
 import numpy as np
 import torch.nn as nn
-from resnet_dcn import ResNet
-from dlanet_dcn import DlaNet
+from backbone.resnet_dcn import ResNet
+from backbone.dlanet_dcn import DlaNet
 from Loss import _gather_feat
 from PIL import Image, ImageDraw
 from dataset import get_affine_transform
