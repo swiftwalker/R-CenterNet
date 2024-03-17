@@ -96,7 +96,7 @@ class ctDataset(data.Dataset):
         draw_gaussian = draw_umich_gaussian
         for k in range(num_objs):  # num_objs图中标记物数目  
             ann = anns[k]  # 第几个标记物的标签
-            bbox, an = coco_box_to_bbox(ann['bbox']) 
+            bbox, an = coco_box_to_bbox(ann['bbox'])  # bbox是左上角和右下角坐标
             cls_id = int(self.cat_ids[ann['category_id']]) 
             bbox[:2] = affine_transform(bbox[:2], trans_output)    # 将box坐标转换到 128*128内的坐标
             bbox[2:] = affine_transform(bbox[2:], trans_output)

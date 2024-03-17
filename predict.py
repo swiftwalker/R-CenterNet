@@ -124,7 +124,7 @@ def ctdet_decode(heat, wh, ang, reg=None, K=100):
     reg = reg.view(batch, K, 2)
     xs = xs.view(batch, K, 1) + reg[:, :, 0:1]
     ys = ys.view(batch, K, 1) + reg[:, :, 1:2]
-   
+    
     wh = _transpose_and_gather_feat(wh, inds)
     wh = wh.view(batch, K, 2)
     
